@@ -1,0 +1,1 @@
+export const appPath = "https://shops-ua.herokuapp.com/";
