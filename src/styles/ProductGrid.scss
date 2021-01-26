@@ -4,24 +4,35 @@
     .product{
         transform-style: preserve-3d;
         transform: translateZ(20px);
-        &::after{
-            content: "";
-            width: 18px;
-            transform: rotateY(90deg);
-            position: absolute;
-            height: 100%;
-            left: 1px;
-            top: 0;
-            background: #4098d9;
-            transform-origin: 0% 0%;
+        background: gray;
+        color: white;
+        border-radius: 10px;
+        &:hover{
+            position: relative;
+            transform: scale(1.125);
+            z-index: 1000;
         }
-        &::before{
-            content: "";
-            top: auto;
-            bottom: 0;
-            background: #267ebf;
-            transform-origin: 100% 100%;
-            transform: rotateX(90deg);
+    }
+}
+
+.filterContainer{
+    .searchContainer{
+        display: flex;
+        margin-left: 18px;
+        margin-top: 5px;
+    }
+
+    .shops-list-filter{
+        .list-item{
+            padding-right: 0;
+            & > div{
+                min-width: unset;
+            }
         }
+    }
+
+    .apllyFilters{
+        padding-top: 0;
+        display: flex;
     }
 }

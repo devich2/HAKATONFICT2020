@@ -5,7 +5,10 @@ export default class ProductService {
     constructor() {
         this.baseUrl = appPath + "shop/"
     }
-    get(shop, search, page = 1) {
-        return fetch(this.baseUrl + (shop || "zakaz_all") + "?" + querystring.stringify({ search, page })).then(res => res.json()).then(res => res.items)
+    get(shops, search, page = 1) {
+        return fetch(this.baseUrl + "zakaz_all" + this.formMultipleShops(shops) + "?" + querystring.stringify({ search, page })).then(res => res.json()).then(res => res.items)
+    }
+    formMultipleShops(shops){
+        return shops && shops?.length ? ("/" + shops.join(",")) : "";
     }
 }
