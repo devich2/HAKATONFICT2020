@@ -10,7 +10,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import isMobile from "react-device-detect"
+import {isMobile} from "react-device-detect"
 import {
     usePositioner,
     useResizeObserver,
@@ -97,6 +97,14 @@ export default function ProductGrid() {
     }
     const addShopFilter = (value) => {
         setFilters((prev) => {
+        
+            const index = prev.shops.indexOf(value);
+            if(index > -1){
+                prev.shops.splice(index, 1)
+                return {
+                    shops: [...prev.shops]
+                }
+            }
             return {
                 shops: [...prev.shops, value]
             }
@@ -109,7 +117,7 @@ export default function ProductGrid() {
     }
 
     return (
-        <div style={!isMobile ? {"display": "flex"} : {}}>
+        <div style={isMobile ? {} : {"display": "flex"}}>
 
             <div className={"filterContainer"}>
                 <div className={"searchContainer"}>
@@ -131,7 +139,7 @@ export default function ProductGrid() {
                                     <ListItemIcon>
                                         <Checkbox
                                             edge="start"
-                                            checked={filters["shops"].indexOf(x.name) !== -1}
+                                            checked={filters["shops"]?.indexOf(x.name) !== -1}
                                             tabIndex={-1}
                                             disableRipple
                                         />
@@ -148,13 +156,13 @@ export default function ProductGrid() {
                 </IconButton>
             </div>
 
-            <ProductMasonry products={products} search={search} fetchMoreItems={fetchMoreItems} />
+            <ProductMasonry products={products} search={search} fetchMoreItems={fetchMoreItems} shops={shops} />
 
         </div>
     )
 }
 
-const ProductMasonry = ({ products, search, fetchMoreItems }) => {
+const ProductMasonry = ({ products, search, fetchMoreItems, shops }) => {
 
     const getMassa = (item) => {
         return item.unit === "kg" ? "1 кг" : `${item.weight} грамм`;
@@ -172,8 +180,13 @@ const ProductMasonry = ({ products, search, fetchMoreItems }) => {
                         <div>
                             {getMassa(data)}
                         </div>
-                        <div>
+                        <div style={{"display": "flex", "justifyContent": "center"}}>
+                            <div style={{"marginRight": "10px"}}>
+                                [{shops.find(x=>x.name === data.shop).title}]
+                            </div>
+                            <div>
                             {`${data.price || data.old_price} грн `}
+                            </div>
                         </div>
                     </div>
                 </a>
