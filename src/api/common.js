@@ -1,1 +1,1 @@
-export const appPath = "https://shops-ua.herokuapp.com/";
+export const appPath = "https://parseshops.herokuapp.com/";
